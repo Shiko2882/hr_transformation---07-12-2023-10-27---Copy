@@ -1,14 +1,18 @@
 HR Transformation App Project Proposal
+
+
 Project Overview:
 Application Name: HR Transformation App
 Objective: The HR Transformation App is a sophisticated web application designed to optimize and streamline the consultation and evaluation processes for companies' HR strategies. By leveraging advanced functionalities, the application aims to enhance the efficiency and effectiveness of HR management.
+
+
 Key Features:
 1. User Management
 1.1 Create and Manage Users
 The system will support the creation and management of user profiles, allowing for a seamless onboarding process. User roles will be defined to ensure controlled access to specific screens and company-related data.
 1.2 Define User Authorities
 Administrators will have the ability to assign specific authorities to users based on their roles, ensuring a granular level of control over the application's features.
-2. Profile Management
+3. Profile Management
 2.1 Create and Manage User Profiles
 Users, including administrators, company users, and consultants, can fill their profiles, providing essential information for effective collaboration and communication within the platform.
 2.2 Company Profile Management
@@ -16,19 +20,19 @@ The application will allow users to fill company profile data. This includes key
 
 
 
-3. Input Form Creation
+4. Input Form Creation
 3.1 Build Input Forms Related to Companies
 A dynamic form builder will be implemented to facilitate the creation of input forms tailored to specific companies. These forms will include categories, questions, and answer types (yes/no or multi-checkbox), accompanied by notes for clarity.
-4. Evaluation Form Creation
+5. Evaluation Form Creation
 4.1 Build Evaluation Forms Related to Companies
 The system will support the creation of detailed evaluation forms with two levels of categories, scoring from 0 to 10, and notes for each question. Real-time percentage calculations will be displayed for category level 1, category level 2, and individual questions.
-5. Action Plan Form
+6. Action Plan Form
 5.1 Build an Action Plan Form
 Companies and consultants can collaboratively develop action plans based on evaluation results. This feature ensures a strategic approach to addressing identified areas for improvement in HR practices.
-6. Reporting
+7. Reporting
 6.1 Create and Manage Reports
 Robust reporting capabilities will be integrated to generate insightful reports on users, company profiles, evaluation forms, and action plans. These reports will support data-driven decision-making.
-7. Dashboard and Analytical Tools
+8. Dashboard and Analytical Tools
 7.1 Dynamic Dashboard
 The application will feature a dynamic dashboard providing a real-time overview of key HR metrics. Administrators, company users, and consultants can access personalized dashboards tailored to their roles.
 7.2 Analytical Tools
