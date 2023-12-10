@@ -9,13 +9,20 @@ from django import forms
 
 
 
-# Form to handle the company data #
-class CompanyViewForm(forms.ModelForm):
+# Form to handle the company data create#
+class CompanyViewFormCreate(forms.ModelForm):
     class Meta:
         model = Company
         fields = '__all__'
-
-# Form to handle the company data #
+        
+# Form to handle the company data Update#
+class CompanyViewFormUpdate(forms.ModelForm):
+    class Meta:
+        model = Company
+        fields = '__all__' # Need to exclude the main data setup
+        
+        
+# Form to handle the consultant data #
 class ConsultantViewForm(forms.ModelForm):
     class Meta:
         model = Consultant
@@ -55,21 +62,33 @@ class InputsAnswerForm(forms.ModelForm):
         return cleaned_data
     
     
-class InputsAnswerFormUpdate(forms.ModelForm):
+class EvaluationAnswerForm(forms.ModelForm):
     class Meta:
-        model = InputsAnswer
+        model = EvaluationAnswer
         fields = ['answer', 'notes']
+        
 
     def __init__(self, *args, **kwargs):
-        # Get the 'instance' from kwargs
-        instance = kwargs.get('instance', None)
-
-        # Remove 'instance' from kwargs
-        kwargs.pop('instance', None)
-
         super().__init__(*args, **kwargs)
+        questions = EvaluationQuestion.objects.all()
 
-        # If there is an instance, populate the form with its data
-        if instance:
-            self.fields['answer'].initial = instance.first().answer
-            self.fields['notes'].initial = instance.first().notes
+        for question in questions:
+            answer = f'answer_{question.id}'
+            notes = f'notes_{question.id}'
+
+            self.fields[answer] = forms.CharField(
+                label=question.name,
+                required=False
+            )
+
+            self.fields[notes] = forms.CharField(
+                label=f'Notes',
+                widget=forms.Textarea(attrs={'rows': 8}),
+                required=False
+            )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        # Additional validation logic if needed
+        return cleaned_data
+    

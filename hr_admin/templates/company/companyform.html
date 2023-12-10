@@ -1,5 +1,6 @@
 
 {% extends 'base.html' %} 
+{% load crispy_forms_tags %} 
 {% load static %}
 {% block content %}
 <button class="btn btn-sm btn-primary" onclick="window.history.back()">Back</button>
@@ -8,23 +9,11 @@
     
 </div>
 <br>
-<form action="" method="POST">
-    {% csrf_token %}
-    
-    <table >
-        {% for field in form %}
-        <tbody>
-        <tr>
-          <td>
-            <label for="{{ form.label }}" style="display:inline-block;vertical-align:middle">{{ field.label_tag }}</label>
-          </td>
-          <td>
-            {{ field }}
-          </td>
-        </tr>
-        {% endfor %}
-        </tbody>
-      </table>
-    <input type="submit" name="Submit" >
+<form method="post" action="{% url 'Update Company' company.id %}">
+  {% csrf_token %}
+  {{ form|crispy }}
+  <br>
+  <br>    
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 {% endblock content %}

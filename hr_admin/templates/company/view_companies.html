@@ -28,18 +28,28 @@
                 </tr>
                 {% for company in companies %}
                 <tr>
-                    <th><img src="{{ company.logo.url }}" class="rounded-t-xl" height=50 width=50></th>
+                    <th><img src="{{ company.logo.url }}" class="rounded-t-xl" height=80 width=140></th>
                     <th>{{ company.id }}</th>
                     <th>{{ company.name }}</th>	
-                    <th>{{ company.user }}</th>	
+                    <th>{{ company.user.name }}</th>	
                     <th>{{ company.size }}</th>	
                     <th>{{ company.employees }}</th> 
                     <th>{{ company.consultant.username }}</th> 
                     <th>{{ company.status }}</th>
-                    <th><a class="fa fa-eye button" href="{% url 'Company Profile' company.id %}"></a></th>
-                    <th><a class="fa fa-edit button" href="">Update</a></th>
-                    <th><a class="fa fa-edit button" href="">Inputs</a></th>
-                    <th><a class="fa fa-edit button" href="">V Inputs</a></th>
+
+
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th><a class="btn btn-secondary" style="height:40px;width:150px" href="{% url 'Company Profile' company.id %}">Company Profile</a></th>
+                        <th><a class="btn btn-secondary" style="height:40px;width:100px" href="{% url 'Update Company' company.id %}">Edit</a></th>
+                        <th><a class="btn btn-primary" style="height:40px;width:100px" href="{% url 'fill_inputs_form_with_pk' company.id %}">Client Input</a></th>
+                        <th><a class="btn btn-primary" style="height:40px;width:100px" href="{% url 'fill_evaluation_form_with_pk' company.id %}">Evaluation</a></th>
+                        <th><a class="btn btn-primary" style="height:40px;width:150px" href="">Action Plan</a></th>
+                        <th><a class="btn btn-primary" style="height:40px;width:150px" href="">KPIs</a></th>
+
+                    </tr>
                 </tr>
                 {% endfor %}
             </table>

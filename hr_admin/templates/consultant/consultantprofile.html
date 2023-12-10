@@ -1,112 +1,41 @@
 
 {% extends 'base.html' %} 
 
-{% block title %}{{ companyid.company_name }}{% endblock %}
+{% block title %}{{ consultantid.name }}{% endblock %}
 
 {% block content %}
 <button class="btn btn-sm btn-primary" onclick="window.history.back()">Back</button>
-<div class="grid grid-cols-6 gap-6">
-    <div class="col-span-2 p-4 rounded-xl mt-6 offset-md-3">
-        <img src="{{ companyid.logo.url }}" class="rounded-xl mt-6 ">
-        <h1 class="mb-6 text-l mt-6 offset-md-3">{{ companyid.company_name }}</h1>
-        <p class="text-gray-500 offset-md-3"><strong>ID: </strong>{{ companyid.id }}</p>
+    <div class="grid grid-cols-6 gap-6">
+        <div class="col-span-2 p-4 rounded-xl mt-6 offset-md-3">
+            <img src="{{ consultantid.logo.url }}" class="rounded-xl mt-6 ">
+            <h1 class="mb-6 text-l mt-6 offset-md-3">{{ consultantid.name }}</h1>
+            <p class="text-gray-500 offset-md-3"><strong>ID: </strong>{{ consultantid.user_id }}</p>
+        </div>
+
+        <div class="col-span-4 p-4 bg-gray-100 rounded-xl mt-6">
+            <h1 class="mb-6 text-3xl">{{ consultantid.name }}</h1>
+            <p class="text-gray-500"><strong>ID: </strong>{{ consultantid.user_id }}</p>
+            <p class="text-gray-500"><strong>Name: </strong>{{ consultantid.name }}</p>
+            <p class="text-gray-500"><strong>Phone: </strong>{{ consultantid.phone }}</p>
+            <p class="text-gray-500"><strong>Email: </strong>{{ consultantid.email }}</p>
+            <p class="text-gray-500"><strong>Linkedin: </strong>{{ consultantid.linkedin }}</p>
+        </div>
     </div>
-
-    <div class="col-span-4 p-4 bg-gray-100 rounded-xl mt-6">
-
-        <h1 class="mb-6 text-3xl">{{ companyid.company_name }}</h1>
-        <p class="text-gray-500"><strong>ID: </strong>{{ companyid.id }}</p>
-        <p class="text-gray-500"><strong>User: </strong>{{ companyid.user }}</p>
-        <p class="text-gray-500"><strong>Project Start: </strong>{{ companyid.project_start }}</p>
-        <p class="text-gray-500"><strong>project_end: </strong>{{ companyid.project_end }}</p>
-        <p class="text-gray-500"><strong>industry: </strong>{{ companyid.industry }}</p>
-        <p class="text-gray-500"><strong>Company Owner: </strong>{{ companyid.owner }}</p>
-        <p class="text-gray-500"><strong>Created at: </strong>{{ companyid.created_at }}</p>
-        <p class="text-gray-500"><strong>Website: </strong>{{ companyid.company_website }}</p>
-
-        {% if companyid.tag %}
-            <p class="text-gray-700">
-                <strong class="text-gray-500">Tags:</strong><br>
-                {{ companyid.tag }}
-            </p>
-        {% endif %}
-
-        {% if request.user == companyid.created_by %}
-            <div class="mt-6 p-6 bg-white rounded-xl">
-                <p>This is your item!</p>
-
-                <a href="" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl">Edit</a>
-                <a href="" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Delete</a>
-            </div>
-        {% else %}  
-        <p></p>
-        {% endif %}
-    </div>
-</div>
-<br>
-<br><br>
-
-<br>
-<div class="grid grid-cols-6 gap-10">
-    <div class="col-span-3 p-10 bg-gray-100 rounded-xl mt-6">
-        <h1 class="mb-6 text-3xl">Background</h1>
-        <p class="text-gray-500"><strong>ID: </strong>{{ companyid.id }}</p>
-        <p class="text-gray-500"><strong>User: </strong>{{ companyid.user }}</p>
-        <p class="text-gray-500"><strong>Project Start: </strong>{{ companyid.project_start }}</p>
-        <p class="text-gray-500"><strong>project_end: </strong>{{ companyid.project_end }}</p>
-        <p class="text-gray-500"><strong>industry: </strong>{{ companyid.industry }}</p>
-        <p class="text-gray-500"><strong>Company Owner: </strong>{{ companyid.owner }}</p>
-        <p class="text-gray-500"><strong>Created at: </strong>{{ companyid.created_at }}</p>
-        <p class="text-gray-500"><strong>Website: </strong>{{ companyid.company_website }}</p>
-    </div>
-
-    <div class="col-span-3 p-10 bg-gray-100 rounded-xl mt-6">
-        <h1 class="mb-6 text-3xl">Other</h1>
-        <p class="text-gray-500"><strong>ID: </strong>{{ companyid.id }}</p>
-        <p class="text-gray-500"><strong>User: </strong>{{ companyid.user }}</p>
-        <p class="text-gray-500"><strong>Project Start: </strong>{{ companyid.project_start }}</p>
-        <p class="text-gray-500"><strong>project_end: </strong>{{ companyid.project_end }}</p>
-        <p class="text-gray-500"><strong>industry: </strong>{{ companyid.industry }}</p>
-        <p class="text-gray-500"><strong>Company Owner: </strong>{{ companyid.owner }}</p>
-        <p class="text-gray-500"><strong>Created at: </strong>{{ companyid.created_at }}</p>
-        <p class="text-gray-500"><strong>Website: </strong>{{ companyid.company_website }}</p>
-        {% if companyid.tag %}
-            <p class="text-gray-700">
-                <strong class="text-gray-500">Tags:</strong><br>
-                {{ companyid.tag }}
-            </p>
-        {% endif %}
-    </div>
-</div>
-    <br><br>
     <br>
-<h1 class="mb-6 text-3xl">Diagnostic Stages</h1>
-<div class="grid grid-cols-8 gap-10">
-    <div class="col-span-2 p-10 bg-gray-100 rounded-xl mt-6">
-        <h1 class="mb-6 text-l">Client Inputs</h1>
-        <p class="text-gray-500"><strong>Status: </strong>{{ companyid.id }}</p>
-        <p class="text-gray-500"><strong>User: </strong>{{ companyid.user }} <span> 
-        </span><a href="" class="inline-block mt-6 px-1 py-2 text-l font-semibold bg-gray-500 text-white rounded-xl">View</a></p>
-        
+    <div class="grid grid-cols-6 gap-10">
+        <div class="col-span-3 p-10 bg-gray-100 rounded-xl mt-6">
+            <h1 class="mb-6 text-3xl">Running Projects</h1>
+            <p class="text-gray-500"><strong>ID: </strong>{{ companyid.id }}</p>
+            <p class="text-gray-500"><strong>User: </strong>{{ companyid.user }}</p>
+            <p class="text-gray-500"><strong>Project Start: </strong>{{ companyid.project_start }}</p>
+        </div>
+
+        <div class="col-span-3 p-10 bg-gray-100 rounded-xl mt-6">
+            <h1 class="mb-6 text-3xl">Action Plans</h1>
+            <p class="text-gray-500"><strong>ID: </strong>{{ companyid.id }}</p>
+            <p class="text-gray-500"><strong>User: </strong>{{ companyid.user }}</p>
+            <p class="text-gray-500"><strong>Project Start: </strong>{{ companyid.project_start }}</p>
+        </div>
     </div>
-    <div class="col-span-2 p-10 bg-gray-100 rounded-xl mt-6">
-        <h1 class="mb-6 text-l">Consultant Inputs</h1>
-        <p class="text-gray-500"><strong>Status: </strong>{{ companyid.id }}</p>
-        <p class="text-gray-500"><strong>User: </strong>{{ companyid.user }} <span> 
-        </span><a href="" class="inline-block mt-6 px-1 py-2 text-l font-semibold bg-gray-500 text-white rounded-xl">View</a></p>
-    </div>
-    <div class="col-span-2 p-10 bg-gray-100 rounded-xl mt-6">
-        <h1 class="mb-6 text-l">Evaluation</h1>
-        <p class="text-gray-500"><strong>Status: </strong>{{ companyid.id }}</p>
-        <p class="text-gray-500"><strong>User: </strong>{{ companyid.user }} <span> 
-        </span><a href="" class="inline-block mt-6 px-1 py-2 text-l font-semibold bg-gray-500 text-white rounded-xl">View</a></p>
-    </div> 
-    <div class="col-span-2 p-10 bg-gray-100 rounded-xl mt-6">
-        <h1 class="mb-6 text-l">Action Plan</h1>
-        <p class="text-gray-500"><strong>Status: </strong>{{ companyid.id }}</p>
-        <p class="text-gray-500"><strong>User: </strong>{{ companyid.user }} <span> 
-        </span><a href="" class="inline-block mt-6 px-1 py-2 text-l font-semibold bg-gray-500 text-white rounded-xl">View</a></p>
-    </div>
-</div>
-<br>
-{% endblock %}
+    <br><br>
+ {% endblock %}

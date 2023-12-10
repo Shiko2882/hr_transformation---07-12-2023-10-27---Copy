@@ -2,15 +2,14 @@
 # This is models.py file
 from django.db import models
 from django.contrib.auth.models import User
-from django import forms
 
 
 # create company model with company profile data that related to company user one to one and can be assigned to more than one consultant user
 
 class Company(models.Model):
-    name = models.CharField(max_length=100 , blank=True, null=True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True)
-    consultant = models.ForeignKey(User, on_delete=models.CASCADE, related_name='consulting_companies', blank=True)
+    name = models.CharField(max_length=120 , blank=True,  null=True)
+    user = models.ManyToManyField(User, blank=True)
+    consultant = models.ForeignKey(User,on_delete=models.CASCADE ,related_name='consulting_companies', blank=True)
     description = models.TextField( blank=True, null=True)
     location = models.CharField(max_length=100, blank=True, null=True)
     website = models.URLField(blank=True, null=True)
@@ -50,6 +49,7 @@ class Consultant(models.Model):
     name = models.CharField(max_length=100)
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     email = models.EmailField()
+    photo = models.ImageField(upload_to='profile',blank=True,null=True)
     phone = models.CharField(max_length=100)
     linkedin = models.URLField( blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -88,7 +88,8 @@ class InputsQuestion(models.Model):
 
 # form and quiestions should be answered by company users one time only, and can be viewed abd edit by admin, company user,assigned consultant user
 class InputsAnswer(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
     question = models.ForeignKey(InputsQuestion, on_delete=models.CASCADE)
     answer = models.CharField(max_length=255, blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
@@ -96,7 +97,8 @@ class InputsAnswer(models.Model):
 
     def __str__(self):
         return self.question.name + '  --->  ' + self.answer
-
+    class Meta:
+        unique_together = ['company', 'question']
     
     
 # create a models for evaluation form that should be created by admin user 
@@ -140,8 +142,8 @@ class EvaluationQuestion(models.Model):
     
 # create a model for the answers under category 2 and the answers should be a score firld [0-10] and a notes field
 class EvaluationAnswer(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    EvaluationQuestion = models.ForeignKey(EvaluationQuestion, on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    question = models.ForeignKey(EvaluationQuestion, on_delete=models.CASCADE)
     answer = models.IntegerField()
     notes = models.TextField()
     # connect the evaluation answer onetoone relationship with the company input answer
@@ -149,7 +151,7 @@ class EvaluationAnswer(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.question
+        return self.question.name + '  --->  ' + str(self.answer)
 
 # create a class to save the final score result for each evaluation
 class EvaluationResult(models.Model):

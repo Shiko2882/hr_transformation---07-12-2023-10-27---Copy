@@ -4,25 +4,53 @@
 
 {% block content %}
 <br/>
-<br>
-<h2 class="mb-12 text-2xl text-center">Newest Companies</h2>
-<div class="mt-6 px-16 py-12 bg-gray-100 rounded-xl">
-    <div class="grid grid-cols-6  gap-10 mt-6">
+<h2 class="mb-12 text-2xl text-center">Dashboard</h2>
+<div class="grid grid-cols-6 gap-10">
+    <div class="col-span-4 p-10 bg-gray-100 rounded-xl mt-6">
+        <h1 class="mb-6 text-1xl">Last Companies</h1>
         {% for company in companies %}
             <div>
-                <a href="">
+                <a href="{% url 'Company Profile' company.id %}">
                     <div>
-                        <img src="{{ company.logo.url }}" class="rounded-t-3xl "  height=80 width=140>
+                        <br>
+                        <img src="{{ company.logo.url }}" class="rounded-t-xl "  height=80 width=140>
                     </div>
-
-                    <div class="p-2 bg-white rounded-b-3xl">
+                        
+                    <div class="p-2 bg-white rounded-b-1xl">
                         <h2 class="">{{ company.name }}</h2>
                     </div>
                 </a>
             </div>
         {% endfor %}
     </div>
+
+    <div class="col-span-2 p-10 bg-gray-100 rounded-xl mt-6">
+        <h1 class="mb-6 text-1xl">Last Added Consultants</h1>
+        {% for consultant in consultants %}
+            <div>
+                <a href="{% url 'Consultant Profile' consultant.user_id %}">
+                    <div class="p-2 bg-blue-500 rounded-b-1xl">
+                        <h2 class="">{{ consultant.name }}</h2>
+                    </div>
+                        
+                    <div class="p-2 bg-white rounded-b-1xl">
+                        <h2 class="">Phone: {{ consultant.phone }}</h2>
+                    </div>
+
+                    <div class="p-2 bg-white rounded-b-1xl">
+                        <h2 class="">Email: {{ consultant.email }}</h2>
+                    </div>
+                    <br>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
 </div>
+<br>
+<br>
+<br>
+<br>
+<br>
 <br>
 
 <div class="container">

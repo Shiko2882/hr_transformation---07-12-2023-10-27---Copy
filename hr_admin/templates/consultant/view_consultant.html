@@ -34,8 +34,7 @@
                     <th>{{ consultant.phone }}</th>	
                     <th>{{ consultant.employees }}</th>
                     <th>{{ consultant.status }}</th>
-                    <th><a class="fa fa-eye button" href=""></a></th>
-                    <th><a class="fa fa-edit button" href=""></a></th>
+                    <th><a class="fa fa-eye button" href="{% url 'Consultant Profile' consultant.user_id %}"></a></th>
 
                 </tr>
                 {% endfor %}

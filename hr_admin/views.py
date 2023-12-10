@@ -5,29 +5,32 @@ from django.views.generic import CreateView
 from .models import *
 from .forms import *
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+
 # Create your views here.
 
 def dashboard(request):
     companies= Company.objects.all()[0:6]
-    consultants=Consultant.objects.all()
+    consultants=Consultant.objects.all()[0:6]
     
     
     context = {"companies":companies, 'consultants':consultants}
     return render(request,'home.html',context)
 
 
-def fill_inputs_form(request):
+
+
+def fill_inputs_form(request, pk=None):
+    try:
+        company = Company.objects.get(id=pk, user=request.user)
+    except Company.DoesNotExist:
+        return HttpResponse('You are not assigned to this company.', status=403)
+
     questions = InputsQuestion.objects.all()
 
     if request.method == 'POST':
         form = InputsAnswerForm(request.POST)
-
         if form.is_valid():
-            # Assuming the user is authenticated
-            user = request.user
-
-            # Save each answer to the database
             for question in questions:
                 answer_field_name = f'answer_{question.id}'
                 notes_field_name = f'notes_{question.id}'
@@ -35,72 +38,82 @@ def fill_inputs_form(request):
                 answer = form.cleaned_data.get(answer_field_name, '')
                 notes = form.cleaned_data.get(notes_field_name, '')
 
-                # Use get_or_create to avoid duplicates
-                InputsAnswer.objects.get_or_create(
-                    user=user,
+                InputsAnswer.objects.update_or_create(
+                    company=company,
                     question=question,
                     defaults={'answer': answer, 'notes': notes}
                 )
 
-            return HttpResponse('Thank you for your inputs')  # Redirect to a success page
+            return HttpResponse('Thank you for your inputs')
     else:
-        # Create a form dynamically with fields for each question
-        form = InputsAnswerForm()
-    return render(request, 'fill_inputs_form.html', {'form': form, 'questions': questions})
+        existing_answers = InputsAnswer.objects.filter(company=company)
+        initial_data = {}
+        for answer in existing_answers:
+            answer_field_name = f'answer_{answer.question.id}'
+            notes_field_name = f'notes_{answer.question.id}'
+            initial_data[answer_field_name] = answer.answer
+            initial_data[notes_field_name] = answer.notes
+
+        form = InputsAnswerForm(initial=initial_data)
+
+    return render(request, 'fill_inputs_form.html', {'form': form, 'questions': questions, 'company': company, 'pk': pk})
+
+# create the view for evaluation answers form #
 
 
+def fill_evaluation_form(request, pk=None):
+    try:
+        company = Company.objects.get(id=pk, user=request.user)
+    except Company.DoesNotExist:
+        return HttpResponse('You are not assigned to this company.', status=403)
 
-@login_required
-def update_inputs_form(request):
-    user = request.user
-
-    # Get all InputsAnswer objects associated with the user
-    instances = InputsAnswer.objects.filter(user=user)
+    questions = EvaluationQuestion.objects.all()
 
     if request.method == 'POST':
-        form = InputsAnswerForm(request.POST)
-
+        form = EvaluationAnswerForm(request.POST)
         if form.is_valid():
-            # Iterate through all questions and update corresponding answers
-            for question in InputsQuestion.objects.all():
+            for question in questions:
                 answer_field_name = f'answer_{question.id}'
                 notes_field_name = f'notes_{question.id}'
 
                 answer = form.cleaned_data.get(answer_field_name, '')
                 notes = form.cleaned_data.get(notes_field_name, '')
 
-                # Update the existing InputsAnswer objects
-                InputsAnswer.objects.filter(user=user, question=question).update(
-                    answer=answer,
-                    notes=notes
+                EvaluationAnswer.objects.update_or_create(
+                    company=company,
+                    question=question,
+                    defaults={'answer': answer, 'notes': notes}
                 )
 
-            return HttpResponse('Thank you for updating your inputs')  # Redirect to a success page
+            return HttpResponse('Thank you for your inputs')
     else:
-        # Create a form with instances
-        form = InputsAnswerForm(instance=instances)
+        existing_answers = EvaluationAnswer.objects.filter(company=company)
+        initial_data = {}
+        for answer in existing_answers:
+            answer_field_name = f'answer_{answer.question.id}'
+            notes_field_name = f'notes_{answer.question.id}'
+            initial_data[answer_field_name] = answer.answer
+            initial_data[notes_field_name] = answer.notes
 
-    return render(request, 'update_inputs_form.html', {'form': form, 'instances': instances})
+        form = EvaluationAnswerForm(initial=initial_data)
 
-def view_inputs_form(request):
-    user = request.user
-    questions = InputsQuestion.objects.all()
-    instance = get_object_or_404(InputsAnswer, user=user)
-    form = InputsAnswerForm(instance=instance)  
-    return render(request, 'view_inputs_form.html', {'form': form, 'questions': questions})
+    return render(request, 'evaluation_answers_form.html', {'form': form, 'questions': questions, 'company': company, 'pk': pk})
+
+
+
 
 
 # a view to view/create/update companies data #
 
 def view_companies(request):
     companies = Company.objects.all()
-    form = CompanyViewForm()
+    form = CompanyViewFormCreate()
     return render(request, 'company/view_companies.html', {'companies': companies , 'form': form})
 
 def createcompany(request):
-    form =CompanyViewForm()
+    form =CompanyViewFormCreate()
     if request.method == 'POST':
-        form = CompanyViewForm(request.POST)
+        form = CompanyViewFormCreate(request.POST)
         if form.is_valid():
             form.save()
             return redirect("/")
@@ -111,14 +124,14 @@ def createcompany(request):
 def updatecompany(request,pk):
     
     company = Company.objects.get(id=pk)
-    form =CompanyViewForm(instance=company)
+    form =CompanyViewFormUpdate(instance=company)
     if request.method == 'POST':
-        form = CompanyViewForm(request.POST,instance=company)
+        form = CompanyViewFormUpdate(request.POST,instance=company)
         if form.is_valid():
             form.save()
             return redirect("/")
     
-    context= {'form':form}
+    context= {'form':form ,'company': company}
     return render(request,'company/companyform.html', context)
 
 
@@ -162,7 +175,7 @@ def updateconsultant(request,pk):
 
 
 def consultantprofile(request,pk):
-    consultantid= Consultant.objects.get(id=pk)
+    consultantid= Consultant.objects.get(user=pk)
     
     context = {"consultantid":consultantid }
     return render(request, "consultant/consultantprofile.html",context)
