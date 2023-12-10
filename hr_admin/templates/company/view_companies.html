@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %} 
+{% block title %} Inputs Answer Form {% endblock %}
+{% block content %}
+<!-- a view of companies-->
+
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="row-md-12  col-md-offset-2">
+            <h1>Companies</h1>
+            <br>
+            <br>
+            <table class="table">
+                <tr>
+                    <th></th>
+                    <th>ID</th>
+                    <th>Company Name</th>
+                    <th>User</th>
+                    <th>Size</th>
+                    <th>Head Count</th>
+                    <th>Assigned Consultant</th>
+                    <th>Status</th>
+                    
+                </tr>
+                {% for company in companies %}
+                <tr>
+                    <th><img src="{{ company.logo.url }}" class="rounded-t-xl" height=50 width=50></th>
+                    <th>{{ company.id }}</th>
+                    <th>{{ company.name }}</th>	
+                    <th>{{ company.user }}</th>	
+                    <th>{{ company.size }}</th>	
+                    <th>{{ company.employees }}</th> 
+                    <th>{{ company.consultant.username }}</th> 
+                    <th>{{ company.status }}</th>
+                    <th><a class="fa fa-eye button" href="{% url 'Company Profile' company.id %}"></a></th>
+                    <th><a class="fa fa-edit button" href="">Update</a></th>
+                    <th><a class="fa fa-edit button" href="">Inputs</a></th>
+                    <th><a class="fa fa-edit button" href="">V Inputs</a></th>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
