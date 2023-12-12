@@ -22,7 +22,7 @@
                     <th>User</th>
                     <th>Size</th>
                     <th>Head Count</th>
-                    <th>Assigned Consultant</th>
+                    <th>Consultant</th>
                     <th>Status</th>
                     
                 </tr>
@@ -35,21 +35,13 @@
                     <th>{{ company.size }}</th>	
                     <th>{{ company.employees }}</th> 
                     <th>{{ company.consultant.username }}</th> 
-                    <th>{{ company.status }}</th>
-
-
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th><a class="btn btn-secondary" style="height:40px;width:150px" href="{% url 'Company Profile' company.id %}">Company Profile</a></th>
-                        <th><a class="btn btn-secondary" style="height:40px;width:100px" href="{% url 'Update Company' company.id %}">Edit</a></th>
-                        <th><a class="btn btn-primary" style="height:40px;width:100px" href="{% url 'fill_inputs_form_with_pk' company.id %}">Client Input</a></th>
-                        <th><a class="btn btn-primary" style="height:40px;width:100px" href="{% url 'fill_evaluation_form_with_pk' company.id %}">Evaluation</a></th>
-                        <th><a class="btn btn-primary" style="height:40px;width:150px" href="">Action Plan</a></th>
-                        <th><a class="btn btn-primary" style="height:40px;width:150px" href="">KPIs</a></th>
-
-                    </tr>
+                    <th><i class="fa fa-toggle-on" aria-hidden="true"></i></th>
+                    <th><a class="fa fa-building-o" title="Company Profile"  href="{% url 'Company Profile' company.id %}"></a></th>
+                    <th><a class="fa fa-building" title="Edit Company Profile"  href="{% url 'Update Company' company.id %}"></a></th>
+                    <th><a class="fa fa-plus" title="Client Input"  href="{% url 'fill_inputs_form' company.id %}"></a></th>
+                    <th><a class="fa fa-star-half-o" title="Evaluation" href="{% url 'fill_evaluation_form_with_pk' company.id %}"></a></th>
+                    <th><a class="fa fa-list-ol" title="Action Plan"  href=""></a></th>
+                    <th><a class="fa fa-tasks" title="KPIs Tracker" href=""></a></th>
                 </tr>
                 {% endfor %}
             </table>

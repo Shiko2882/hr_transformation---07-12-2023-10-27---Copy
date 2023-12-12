@@ -49,33 +49,70 @@
 <br>
 <div class="grid grid-cols-6 gap-10">
     <div class="col-span-3 p-10 bg-gray-100 rounded-xl mt-6">
-        <h1 class="mb-6 text-3xl">Background</h1>
-        <p class="text-gray-500"><strong>ID: </strong>{{ companyid.id }}</p>
-        <p class="text-gray-500"><strong>User: </strong>{{ companyid.user }}</p>
-        <p class="text-gray-500"><strong>Project Start: </strong>{{ companyid.project_start }}</p>
-        <p class="text-gray-500"><strong>project_end: </strong>{{ companyid.project_end }}</p>
-        <p class="text-gray-500"><strong>industry: </strong>{{ companyid.industry }}</p>
-        <p class="text-gray-500"><strong>Company Owner: </strong>{{ companyid.owner }}</p>
-        <p class="text-gray-500"><strong>Created at: </strong>{{ companyid.created_at }}</p>
-        <p class="text-gray-500"><strong>Website: </strong>{{ companyid.company_website }}</p>
+        <h1 class="mb-6 text-3xl">Company Info</h1>
+        <p class="text-gray-500"><strong>Name of CEO / MD: </strong>{{ companyid.name_of_ceo_md }}</p>
+        <p class="text-gray-500"><strong>Company Contacts Numbers: </strong>{{ companyid.company_contacts_numbers }}</p>
+        <p class="text-gray-500"><strong>Company Address: </strong>{{ companyid.company_address }}</p>
+        <p class="text-gray-500"><strong>Company Website: </strong>{{ companyid.company_website }}</p>
+        <p class="text-gray-500"><strong>Industry: </strong>{{ companyid.industry }}</p>
     </div>
 
     <div class="col-span-3 p-10 bg-gray-100 rounded-xl mt-6">
-        <h1 class="mb-6 text-3xl">Other</h1>
-        <p class="text-gray-500"><strong>ID: </strong>{{ companyid.id }}</p>
-        <p class="text-gray-500"><strong>User: </strong>{{ companyid.user }}</p>
-        <p class="text-gray-500"><strong>Project Start: </strong>{{ companyid.project_start }}</p>
-        <p class="text-gray-500"><strong>project_end: </strong>{{ companyid.project_end }}</p>
-        <p class="text-gray-500"><strong>industry: </strong>{{ companyid.industry }}</p>
-        <p class="text-gray-500"><strong>Company Owner: </strong>{{ companyid.owner }}</p>
-        <p class="text-gray-500"><strong>Created at: </strong>{{ companyid.created_at }}</p>
-        <p class="text-gray-500"><strong>Website: </strong>{{ companyid.company_website }}</p>
-        {% if companyid.tag %}
-            <p class="text-gray-700">
-                <strong class="text-gray-500">Tags:</strong><br>
-                {{ companyid.tag }}
-            </p>
-        {% endif %}
+        <h1 class="mb-6 text-3xl">Company Background</h1>
+
+        <p class="text-gray-500"><strong>Official social media pages : </strong>{{ companyid.official_social_media_pages }}</p>
+        <p class="text-gray-500"><strong>Legal formation: </strong>{{ companyid.legal_formation }}</p>
+        <p class="text-gray-500"><strong>Ownership: </strong>{{ companyid.ownership }}</p>
+        <p class="text-gray-500"><strong>Products: </strong>{{ companyid.products }}</p>
+        <p class="text-gray-500"><strong>Sales Channels: </strong>{{ companyid.sales_channels }}</p>
+        <p class="text-gray-500"><strong>Professional Staff: </strong>{{ companyid.professional_staff }}</p>
+        <p class="text-gray-500"><strong>Exports (%) of Revenue: </strong>{{ companyid.exports_of_revenue }}</p>
+        <p class="text-gray-500"><strong>Management: </strong>{{ companyid.management }}</p>
+        <p class="text-gray-500"><strong>Organization classification: </strong>{{ companyid.organization_classification }}</p>
+        <p class="text-gray-500"><strong>Locations: </strong>{{ companyid.locations }}</p>
+        
+    </div>
+</div>
+<div class="grid grid-cols-6 gap-10">
+    <div class="col-span-3 p-10 bg-gray-100 rounded-xl mt-6">
+        <h1 class="mb-6 text-3xl">Industry background</h1>
+        <p class="text-gray-500"><strong>Web search: </strong>{{ companyid.web_search }}</p>
+        <p class="text-gray-500"><strong>Trade & industry references: </strong>{{ companyid.trade_industry_references }}</p>
+        <p class="text-gray-500"><strong>Official governmental websites: </strong>{{ companyid.official_governmental_websites }}</p>
+        
+    </div>
+
+    <div class="col-span-3 p-10 bg-gray-100 rounded-xl mt-6">
+        <h1 class="mb-6 text-3xl">Business Direction / Strategy</h1>
+
+        <p class="text-gray-500"><strong>Recent strategy or planning document: </strong>{{ companyid.recent_strategy_or_planning_document }}</p>
+        <p class="text-gray-500"><strong>Direction / strategy brief : </strong>{{ companyid.direction_strategy }}</p>
+        <p class="text-gray-500"><strong>If possible, determine specific initiatives/projects to achieve strategy: </strong>{{ companyid.initiatives_projects }}</p>
+        
+    </div>
+</div>
+<div class="grid grid-cols-6 gap-10">
+    <div class="col-span-3 p-10 bg-gray-100 rounded-xl mt-6">
+        <h1 class="mb-6 text-3xl">Challenges</h1>
+        <p class="text-gray-500"><strong>Market: </strong>{{ companyid.market }}</p>
+        <p class="text-gray-500"><strong>Financial : </strong>{{ companyid.financial }}</p>
+        <p class="text-gray-500"><strong>Production: </strong>{{ companyid.production }}</p>
+        <p class="text-gray-500"><strong>Supply chain: </strong>{{ companyid.supply_chain }}</p>
+        <p class="text-gray-500"><strong>Organizational/people : </strong>{{ companyid.organizational_people }}</p>
+        <p class="text-gray-500"><strong>Customer: </strong>{{ companyid.customer }}</p>
+        <p class="text-gray-500"><strong>Legal: </strong>{{ companyid.legal }}</p>
+        <p class="text-gray-500"><strong>Technological: </strong>{{ companyid.technological }}</p>
+    </div>
+
+    <div class="col-span-3 p-10 bg-gray-100 rounded-xl mt-6">
+        <h1 class="mb-6 text-3xl">Basic Data</h1>
+
+        <p class="text-gray-500"><strong>Headcount: </strong>{{ companyid.headcount }}</p>
+        <p class="text-gray-500"><strong>Headcount Distribution: </strong>{{ companyid.headcount_distribution }}</p>
+        <p class="text-gray-500"><strong>Headcount Distribution Notes: </strong>{{ companyid.headcount_distribution_notes }}</p>
+        <p class="text-gray-500"><strong>Turnover (%) 2022 Aggregate: </strong>{{ companyid.turnover }}</p>
+        <p class="text-gray-500"><strong>Headcount classifications: </strong>{{ companyid.headcount_classifications }}</p>
+        
     </div>
 </div>
     <br><br>
@@ -84,8 +121,10 @@
 <div class="grid grid-cols-8 gap-10">
     <div class="col-span-2 p-10 bg-gray-100 rounded-xl mt-6">
         <h1 class="mb-6 text-l">Client Inputs</h1>
-        <p class="text-gray-500"><strong>Status: </strong>{{ companyid.id }}</p>
-        <p class="text-gray-500"><strong>User: </strong>{{ companyid.user }} <span> 
+
+
+
+
         </span><a href="" class="inline-block mt-6 px-1 py-2 text-l font-semibold bg-gray-500 text-white rounded-xl">View</a></p>
         
     </div>

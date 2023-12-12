@@ -6,6 +6,7 @@ from .models import *
 from .forms import *
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib import messages
 
 # Create your views here.
 
@@ -25,11 +26,17 @@ def fill_inputs_form(request, pk=None):
         company = Company.objects.get(id=pk, user=request.user)
     except Company.DoesNotExist:
         return HttpResponse('You are not assigned to this company.', status=403)
-
+    category = InputsCategory.objects.all()
     questions = InputsQuestion.objects.all()
+    existing_answers = InputsAnswer.objects.filter(company=company).select_related('question')
+    initial_data = {}
+
+    for answer in existing_answers:
+        initial_data[f'answer_{answer.question.id}'] = answer.answer
+        initial_data[f'notes_{answer.question.id}'] = answer.notes
 
     if request.method == 'POST':
-        form = InputsAnswerForm(request.POST)
+        form = InputsAnswerForm(request.POST, initial=initial_data)
         if form.is_valid():
             for question in questions:
                 answer_field_name = f'answer_{question.id}'
@@ -37,26 +44,23 @@ def fill_inputs_form(request, pk=None):
 
                 answer = form.cleaned_data.get(answer_field_name, '')
                 notes = form.cleaned_data.get(notes_field_name, '')
-
                 InputsAnswer.objects.update_or_create(
                     company=company,
                     question=question,
                     defaults={'answer': answer, 'notes': notes}
                 )
 
-            return HttpResponse('Thank you for your inputs')
+            messages.success(request, 'Data submitted successfully.')
+            return redirect('fill_inputs_form', pk=pk)
+        else:
+            # Form is not valid, handle errors or display them in the template
+            pass
     else:
-        existing_answers = InputsAnswer.objects.filter(company=company)
-        initial_data = {}
-        for answer in existing_answers:
-            answer_field_name = f'answer_{answer.question.id}'
-            notes_field_name = f'notes_{answer.question.id}'
-            initial_data[answer_field_name] = answer.answer
-            initial_data[notes_field_name] = answer.notes
-
         form = InputsAnswerForm(initial=initial_data)
 
-    return render(request, 'fill_inputs_form.html', {'form': form, 'questions': questions, 'company': company, 'pk': pk})
+    return render(request, 'fill_inputs_form.html', {'form': form, 'questions': questions, 'company': company, 'pk': pk, 'category': category})
+
+
 
 # create the view for evaluation answers form #
 

@@ -11,26 +11,45 @@ class Company(models.Model):
     user = models.ManyToManyField(User, blank=True)
     consultant = models.ForeignKey(User,on_delete=models.CASCADE ,related_name='consulting_companies', blank=True)
     description = models.TextField( blank=True, null=True)
-    location = models.CharField(max_length=100, blank=True, null=True)
-    website = models.URLField(blank=True, null=True)
-    industry = models.CharField(max_length=100, blank=True, null=True)
-    size = models.IntegerField(blank=True, null=True)
-    founded = models.DateField(blank=True, null=True)
-    Legal = models.CharField(max_length=100, blank=True, null=True)
     logo= models.ImageField(upload_to='logos',blank=True,null=True)
-    CEO = models.CharField(max_length=100, blank=True, null=True)
-    employees = models.IntegerField(blank=True, null=True)
+    #Extra Data
+    name_of_ceo_md = models.CharField(max_length=100, blank=True, null=True)
+    company_contacts_numbers = models.TextField( blank=True, null=True)
+    company_address = models.TextField( blank=True, null=True)
+    company_website = models.URLField(blank=True, null=True)
+    industry = models.CharField(max_length=100, blank=True, null=True)
+    official_social_media_pages = models.TextField( blank=True, null=True)
+    legal_formation = models.TextField( blank=True, null=True)
+    ownership = models.TextField( blank=True, null=True)
+    products = models.TextField( blank=True, null=True)
+    sales_channels = models.TextField( blank=True, null=True)
+    professional_staff = models.CharField(max_length=100, blank=True, null=True)
+    exports_of_revenue = models.CharField(max_length=100, blank=True, null=True)
+    management = models.CharField(max_length=100, blank=True, null=True)
+    organization_classification = models.TextField( blank=True, null=True)
+    locations = models.TextField( blank=True, null=True)
+    web_search = models.CharField(max_length=100, blank=True, null=True)
+    trade_industry_references = models.CharField(max_length=100, blank=True, null=True)
+    official_governmental_websites = models.CharField(max_length=100, blank=True, null=True)
+    recent_strategy_or_planning_document = models.TextField( blank=True, null=True)
+    direction_strategy = models.TextField( blank=True, null=True)
+    initiatives_projects = models.TextField( blank=True, null=True)
+    market = models.CharField(max_length=100, blank=True, null=True)
+    financial = models.CharField(max_length=100, blank=True, null=True)
+    production = models.CharField(max_length=100, blank=True, null=True)
+    supply_chain = models.CharField(max_length=100, blank=True, null=True)
+    organizational_people = models.CharField(max_length=100, blank=True, null=True)
+    customer = models.CharField(max_length=100, blank=True, null=True)
+    legal = models.CharField(max_length=100, blank=True, null=True)
+    technological = models.CharField(max_length=100, blank=True, null=True)
+    headcount = models.IntegerField(blank=True, null=True)
+    headcount_distribution = models.CharField(max_length=100, blank=True, null=True)
+    headcount_distribution_notes = models.TextField( blank=True, null=True)
     turnover = models.CharField(max_length=100, blank=True, null=True)
-    revenue = models.CharField(max_length=100, blank=True, null=True)
-    revenue_range = models.CharField(max_length=100, blank=True, null=True)
-    revenue_currency = models.CharField(max_length=100, blank=True, null=True)
-    revenue_year = models.IntegerField(blank=True, null=True)
-    headquarters = models.CharField(max_length=100, blank=True, null=True)
-    phone = models.CharField(max_length=100, blank=True, null=True)
-    email = models.EmailField(blank=True, null=True)
-    linkedin = models.URLField(blank=True, null=True)
-    twitter = models.URLField(blank=True, null=True)
-    facebook = models.URLField(blank=True, null=True)
+    headcount_classifications = models.CharField(max_length=100, blank=True, null=True)
+
+
+
     # assign forms to company (Company InputsForm,Evaluation Form,Action Plan)
     actionplanform = models.ForeignKey('ActionPlanForm', on_delete=models.CASCADE, blank=True, null=True)
     evaluationform = models.ForeignKey('EvaluationForm', on_delete=models.CASCADE, blank=True, null=True)
@@ -79,7 +98,7 @@ class InputsCategory(models.Model):
 # form Should have a model to create a question that have many options to answer like yes or no , multiple choice or single choice and also a notes field for each question
 
 class InputsQuestion(models.Model):
-    InputsCategory = models.ForeignKey(InputsCategory, on_delete=models.CASCADE)   
+    category = models.ForeignKey(InputsCategory, on_delete=models.CASCADE)   
     name = models.CharField(max_length=100)
     options = models.CharField(max_length=100, choices=[('yes_no', 'Yes or No'), ('multiple_choice', 'Multiple Choice'), ('single_choice', 'Single Choice')], blank=True, null=True)
     notes = models.TextField( blank=True, null=True)
@@ -97,6 +116,8 @@ class InputsAnswer(models.Model):
 
     def __str__(self):
         return self.question.name + '  --->  ' + self.answer
+    def __str__(cat):
+        return self.question.InputsCategory.name
     class Meta:
         unique_together = ['company', 'question']
     

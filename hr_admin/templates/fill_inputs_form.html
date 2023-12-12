@@ -1,4 +1,5 @@
 
+
 <!-- Compare this snippet from hr_admin/templates/consultant/fill_inputs_form.html: -->
 
 {% extends 'base.html' %}
@@ -13,13 +14,17 @@
 <!--<h1>{{ companyid.company_name }}</h1>--->
 <div class="container">
     <div class="row">
-        <div class="row-md-8 col-md-8 col-md-offset-2">
+        <div class="row-md-8  col-md-12 col-md-offset-2">
             <h1>Inputs Answer Form</h1>
             <br>
             <br>
-            <form method="post" action="{% url 'fill_inputs_form_with_pk' pk %}">
+            <form method="post" action="{% url 'fill_inputs_form' pk %}">
                 {% csrf_token %}
-                {{ form|crispy }}
+                {% include 'messages.html' %}
+                <table class="form-table" role="presentation">
+                    {{ form.as_table }}
+                    <br>
+                  </table>
                 <br>
                 <br>    
                 <button type="submit" class="btn btn-primary">Submit</button>

@@ -7,7 +7,7 @@ from .views import *
 
 urlpatterns = [
     path("", dashboard, name="home"),
-    path('fill_inputs_form/<int:pk>/', fill_inputs_form, name='fill_inputs_form_with_pk'),
+    path('fill_inputs_form/<int:pk>/', fill_inputs_form, name='fill_inputs_form'),
     path('fill_evaluation_form/<int:pk>/', fill_evaluation_form, name='fill_evaluation_form_with_pk'),
     
     path('view_companies/', view_companies, name='view_companies'),

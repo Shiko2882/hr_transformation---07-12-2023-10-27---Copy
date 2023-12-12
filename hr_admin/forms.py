@@ -34,6 +34,7 @@ class InputsAnswerForm(forms.ModelForm):
     class Meta:
         model = InputsAnswer
         fields = ['answer', 'notes']
+
         
 
     def __init__(self, *args, **kwargs):
@@ -44,6 +45,8 @@ class InputsAnswerForm(forms.ModelForm):
         for question in questions:
             answer = f'answer_{question.id}'
             notes = f'notes_{question.id}'
+
+
 
             self.fields[answer] = forms.CharField(
                 label=question.name,
