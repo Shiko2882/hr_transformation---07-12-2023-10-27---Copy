@@ -11,6 +11,8 @@ admin.site.register(InputsCategory)
 admin.site.register(InputsQuestion)
 admin.site.register(InputsAnswer)
 
+admin.site.register(Attachment)
+
 #admin.site.register(FeedbackForm)
 #admin.site.register(FeedbackCategory)
 #admin.site.register(FeedbackQuestion)

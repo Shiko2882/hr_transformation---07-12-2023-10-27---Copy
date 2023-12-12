@@ -27,7 +27,10 @@ class ConsultantViewForm(forms.ModelForm):
     class Meta:
         model = Consultant
         fields = '__all__'
-
+class AttachmentForm(forms.ModelForm):
+    class Meta:
+        model = Attachment
+        fields = ['file', 'description']
 
 
 class InputsAnswerForm(forms.ModelForm):

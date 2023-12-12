@@ -6,58 +6,38 @@
 {% block content %}
 <button class="btn btn-sm btn-primary" onclick="window.history.back()">Back</button>
 <div class="grid grid-cols-6 gap-6">
-    <div class="col-span-2 p-4 rounded-xl mt-6 offset-md-3">
+    <div class="col-span-2 p-4 rounded-xl mt-6 offset-md-1">
         <img src="{{ companyid.logo.url }}" class="rounded-xl mt-6 ">
-        <h1 class="mb-6 text-l mt-6 offset-md-3">{{ companyid.company_name }}</h1>
-        <p class="text-gray-500 offset-md-3"><strong>ID: </strong>{{ companyid.id }}</p>
+        <p class="text-gray-500"><strong>ID: </strong>{{ companyid.id }} - {{ companyid.name }}</p>
+        <br>
+        <p class="text-gray-500"><strong>Action Tools:</strong></p>
+        <a class="fa fa-building" title="Edit Company Profile"  href="{% url 'Update Company' companyid.id %}"></a>
+        <a class="fa fa-plus offset-md-1" title="Client Input"  href="{% url 'fill_inputs_form' companyid.id %}"></a>
+        <a class="fa fa-star-half-o offset-md-1" title="Evaluation" href="{% url 'fill_evaluation_form_with_pk' companyid.id %}"></a>
+        <a class="fa fa-list-ol offset-md-1" title="Action Plan"  href=""></a>
+        <a class="fa fa-tasks offset-md-1" title="KPIs Tracker" href=""></a>
     </div>
-
+    
     <div class="col-span-4 p-4 bg-gray-100 rounded-xl mt-6">
 
-        <h1 class="mb-6 text-3xl">{{ companyid.company_name }}</h1>
-        <p class="text-gray-500"><strong>ID: </strong>{{ companyid.id }}</p>
-        <p class="text-gray-500"><strong>User: </strong>{{ companyid.user }}</p>
-        <p class="text-gray-500"><strong>Project Start: </strong>{{ companyid.project_start }}</p>
-        <p class="text-gray-500"><strong>project_end: </strong>{{ companyid.project_end }}</p>
-        <p class="text-gray-500"><strong>industry: </strong>{{ companyid.industry }}</p>
-        <p class="text-gray-500"><strong>Company Owner: </strong>{{ companyid.owner }}</p>
-        <p class="text-gray-500"><strong>Created at: </strong>{{ companyid.created_at }}</p>
-        <p class="text-gray-500"><strong>Website: </strong>{{ companyid.company_website }}</p>
-
-        {% if companyid.tag %}
-            <p class="text-gray-700">
-                <strong class="text-gray-500">Tags:</strong><br>
-                {{ companyid.tag }}
-            </p>
-        {% endif %}
-
-        {% if request.user == companyid.created_by %}
-            <div class="mt-6 p-6 bg-white rounded-xl">
-                <p>This is your item!</p>
-
-                <a href="" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl">Edit</a>
-                <a href="" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Delete</a>
-            </div>
-        {% else %}  
-        <p></p>
-        {% endif %}
-    </div>
-</div>
-<br>
-<br><br>
-
-<br>
-<div class="grid grid-cols-6 gap-10">
-    <div class="col-span-3 p-10 bg-gray-100 rounded-xl mt-6">
+        <p class="text-gray-500"><strong>ID: </strong>{{ companyid.id }} - {{ companyid.name }}</p>
+        <br>
+        {% include 'company/attachment_widget.html' %}
         <h1 class="mb-6 text-3xl">Company Info</h1>
         <p class="text-gray-500"><strong>Name of CEO / MD: </strong>{{ companyid.name_of_ceo_md }}</p>
         <p class="text-gray-500"><strong>Company Contacts Numbers: </strong>{{ companyid.company_contacts_numbers }}</p>
         <p class="text-gray-500"><strong>Company Address: </strong>{{ companyid.company_address }}</p>
         <p class="text-gray-500"><strong>Company Website: </strong>{{ companyid.company_website }}</p>
         <p class="text-gray-500"><strong>Industry: </strong>{{ companyid.industry }}</p>
-    </div>
 
-    <div class="col-span-3 p-10 bg-gray-100 rounded-xl mt-6">
+    </div>
+</div>
+
+
+<br>
+<div class="grid grid-cols-6 gap-10">
+
+    <div class="col-span-6 p-10 bg-gray-100 rounded-xl mt-6">
         <h1 class="mb-6 text-3xl">Company Background</h1>
 
         <p class="text-gray-500"><strong>Official social media pages : </strong>{{ companyid.official_social_media_pages }}</p>

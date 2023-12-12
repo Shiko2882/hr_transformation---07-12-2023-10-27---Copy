@@ -18,8 +18,32 @@ def dashboard(request):
     context = {"companies":companies, 'consultants':consultants}
     return render(request,'home.html',context)
 
+def company_attachments(request, company_id):
+    company = get_object_or_404(Company, pk=company_id)
+    attachments = company.attachments.all()
+
+    if request.method == 'POST':
+        form = AttachmentForm(request.POST, request.FILES)
+        if form.is_valid():
+            attachment = form.save(commit=False)
+            attachment.company = company
+            attachment.save()
+            print("Attachment saved successfully!")  # Add this line
+            return redirect('company_attachments', company_id=company_id)
+    else:
+        form = AttachmentForm()
+
+    return render(request, 'company/company_attachments.html', {'company': company, 'attachments': attachments, 'form': form})
 
 
+def attachment_widget(request, company_id):
+    company = Company.objects.get(pk=company_id)
+    attachments = company.attachments.all()
+    
+    return render(request, 'company/attachment_widget.html', {'company': company, 'attachments': attachments})
+def attachment_detail(request, attachment_id):
+    attachment = get_object_or_404(Attachment, pk=attachment_id)
+    return render(request, 'company/attachment_detail.html', {'attachment': attachment})
 
 def fill_inputs_form(request, pk=None):
     try:

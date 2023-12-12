@@ -20,6 +20,9 @@ urlpatterns = [
     path("updateconsultant/<str:pk>", updateconsultant, name="Update consultant"),
     path("consultantprofile/<str:pk>", consultantprofile, name="Consultant Profile"),    
 
+    path('attachments/<int:company_id>', company_attachments, name='company_attachments'),
+    path('company/<int:company_id>/attachment-widget/', attachment_widget, name='attachment_widget'),
+    path('attachment/<int:attachment_id>/', attachment_detail, name='attachment_detail'),
 
 
 ] + static (settings.MEDIA_URL, document_root= settings.MEDIA_ROOT )

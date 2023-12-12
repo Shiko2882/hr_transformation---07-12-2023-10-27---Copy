@@ -4,15 +4,27 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-# create company model with company profile data that related to company user one to one and can be assigned to more than one consultant user
+# Attachments Model
+class Attachment(models.Model):
+    company = models.ForeignKey('Company', on_delete=models.CASCADE, related_name='company_attachments')
+    file = models.FileField(upload_to='attachments/')
+    description = models.TextField(blank=True, null=True)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f"{self.company.name} - {self.file.name}"
+
+
+# create company model with company profile data that related to company user one to one and can be assigned to more than one consultant user
 class Company(models.Model):
     name = models.CharField(max_length=120 , blank=True,  null=True)
-    user = models.ManyToManyField(User, blank=True)
+    user = models.ManyToManyField(User, blank=True , null=True)
     consultant = models.ForeignKey(User,on_delete=models.CASCADE ,related_name='consulting_companies', blank=True)
     description = models.TextField( blank=True, null=True)
     logo= models.ImageField(upload_to='logos',blank=True,null=True)
-    #Extra Data
+    attachments = models.ManyToManyField(Attachment, blank=True, related_name='company_attachments')
+    
+    
     name_of_ceo_md = models.CharField(max_length=100, blank=True, null=True)
     company_contacts_numbers = models.TextField( blank=True, null=True)
     company_address = models.TextField( blank=True, null=True)
@@ -48,6 +60,7 @@ class Company(models.Model):
     turnover = models.CharField(max_length=100, blank=True, null=True)
     headcount_classifications = models.CharField(max_length=100, blank=True, null=True)
 
+    # attachment
 
 
     # assign forms to company (Company InputsForm,Evaluation Form,Action Plan)
@@ -75,7 +88,7 @@ class Consultant(models.Model):
     def __str__(self):
         return self.name
 
-  
+
 
 # class to build a form by admin user called (Company Inputs) 
 # form should contain a questions grouped under category defined by admin

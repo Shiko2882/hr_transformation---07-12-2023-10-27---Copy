@@ -1,0 +1,10 @@
+<div>
+    <h3>{{ company.name }} Attachments</h3>
+    <ul>
+        {% for attachment in attachments %}
+            <li>
+                <a href="{% url 'attachment_detail' attachment.id %}">{{ attachment.file.name }} - {{ attachment.description }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
