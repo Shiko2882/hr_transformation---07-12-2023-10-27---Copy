@@ -4,6 +4,7 @@
 {% block title %}{{ companyid.company_name }}{% endblock %}
 
 {% block content %}
+    
 <button class="btn btn-sm btn-primary" onclick="window.history.back()">Back</button>
 <div class="grid grid-cols-6 gap-6">
     <div class="col-span-2 p-4 rounded-xl mt-6 offset-md-1">
@@ -11,7 +12,7 @@
         <p class="text-gray-500"><strong>ID: </strong>{{ companyid.id }} - {{ companyid.name }}</p>
         <br>
         <p class="text-gray-500"><strong>Action Tools:</strong></p>
-        <a class="fa fa-building" title="Edit Company Profile"  href="{% url 'Update Company' companyid.id %}"></a>
+        <a class="fa fa-edit" title="Edit Company Profile"  href="{% url 'Update Company' companyid.id %}"></a>
         <a class="fa fa-plus offset-md-1" title="Client Input"  href="{% url 'fill_inputs_form' companyid.id %}"></a>
         <a class="fa fa-star-half-o offset-md-1" title="Evaluation" href="{% url 'fill_evaluation_form_with_pk' companyid.id %}"></a>
         <a class="fa fa-list-ol offset-md-1" title="Action Plan"  href=""></a>
@@ -22,7 +23,7 @@
 
         <p class="text-gray-500"><strong>ID: </strong>{{ companyid.id }} - {{ companyid.name }}</p>
         <br>
-        {% include 'company/attachment_widget.html' %}
+        
         <h1 class="mb-6 text-3xl">Company Info</h1>
         <p class="text-gray-500"><strong>Name of CEO / MD: </strong>{{ companyid.name_of_ceo_md }}</p>
         <p class="text-gray-500"><strong>Company Contacts Numbers: </strong>{{ companyid.company_contacts_numbers }}</p>
@@ -35,11 +36,9 @@
 
 
 <br>
-<div class="grid grid-cols-6 gap-10">
-
-    <div class="col-span-6 p-10 bg-gray-100 rounded-xl mt-6">
+<div class="grid grid-cols-8 gap-10">
+    <div class="col-span-5 p-10 bg-gray-100 rounded-xl mt-6">
         <h1 class="mb-6 text-3xl">Company Background</h1>
-
         <p class="text-gray-500"><strong>Official social media pages : </strong>{{ companyid.official_social_media_pages }}</p>
         <p class="text-gray-500"><strong>Legal formation: </strong>{{ companyid.legal_formation }}</p>
         <p class="text-gray-500"><strong>Ownership: </strong>{{ companyid.ownership }}</p>
@@ -50,7 +49,11 @@
         <p class="text-gray-500"><strong>Management: </strong>{{ companyid.management }}</p>
         <p class="text-gray-500"><strong>Organization classification: </strong>{{ companyid.organization_classification }}</p>
         <p class="text-gray-500"><strong>Locations: </strong>{{ companyid.locations }}</p>
-        
+    </div>
+    <div class="col-span-3 p-10 bg-gray-100 rounded-xl mt-6">
+        <h1 class="mb-6 text-3xl inline-block">Attachments</h1> 
+<a class="inline-block float-right fa fa-upload" aria-hidden="true" title="Upload new attachment" href="{% url 'company_attachments' companyid.id %}"></a>
+{% include 'company/attachment_widget.html' %}
     </div>
 </div>
 <div class="grid grid-cols-6 gap-10">

@@ -27,7 +27,7 @@
                     
                 </tr>
                 {% for company in companies %}
-                <tr>
+                <tr onclick="window.location='{% url 'Company Profile' company.id %}';" style="cursor: pointer;">
                     <th><img src="{{ company.logo.url }}" class="rounded-t-xl" height=80 width=140></th>
                     <th>{{ company.id }}</th>
                     <th>{{ company.name }}</th>	
@@ -36,8 +36,6 @@
                     <th>{{ company.employees }}</th> 
                     <th>{{ company.consultant.username }}</th> 
                     <th><i class="fa fa-toggle-on" aria-hidden="true"></i></th>
-                    <th><a class="fa fa-building-o" title="Company Profile"  href="{% url 'Company Profile' company.id %}"></a></th>
-                    <th><a class="fa fa-building" title="Edit Company Profile"  href="{% url 'Update Company' company.id %}"></a></th>
                     <th><a class="fa fa-plus" title="Client Input"  href="{% url 'fill_inputs_form' company.id %}"></a></th>
                     <th><a class="fa fa-star-half-o" title="Evaluation" href="{% url 'fill_evaluation_form_with_pk' company.id %}"></a></th>
                     <th><a class="fa fa-list-ol" title="Action Plan"  href=""></a></th>

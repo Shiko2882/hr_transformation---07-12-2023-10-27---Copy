@@ -20,8 +20,8 @@ urlpatterns = [
     path("updateconsultant/<str:pk>", updateconsultant, name="Update consultant"),
     path("consultantprofile/<str:pk>", consultantprofile, name="Consultant Profile"),    
 
-    path('attachments/<int:company_id>', company_attachments, name='company_attachments'),
-    path('company/<int:company_id>/attachment-widget/', attachment_widget, name='attachment_widget'),
+    path('attachments/<str:pk>', company_attachments, name='company_attachments'),
+    path('attachment-widget/<str:pk>', attachment_widget, name='attachment_widget'),
     path('attachment/<int:attachment_id>/', attachment_detail, name='attachment_detail'),
 
 

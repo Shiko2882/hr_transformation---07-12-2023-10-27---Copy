@@ -116,21 +116,24 @@ class InputsQuestion(models.Model):
     options = models.CharField(max_length=100, choices=[('yes_no', 'Yes or No'), ('multiple_choice', 'Multiple Choice'), ('single_choice', 'Single Choice')], blank=True, null=True)
     notes = models.TextField( blank=True, null=True)
     def __str__(self):
-        return self.InputsCategory.InputsForm.name + '  --->  ' + self.InputsCategory.name + '  --->  ' + self.name 
+        return self.name 
 
 # form and quiestions should be answered by company users one time only, and can be viewed abd edit by admin, company user,assigned consultant user
 class InputsAnswer(models.Model):
-
+    YES_CHOICES = (
+        ('NA', 'N/A'),
+        ('Y', 'Yes'),
+        ('N', 'No'),
+    )
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     question = models.ForeignKey(InputsQuestion, on_delete=models.CASCADE)
-    answer = models.CharField(max_length=255, blank=True, null=True)
+    answer = models.CharField(max_length=255, blank=True, null=True, choices= YES_CHOICES, default='NA')
     notes = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.question.name + '  --->  ' + self.answer
-    def __str__(cat):
-        return self.question.InputsCategory.name
+
     class Meta:
         unique_together = ['company', 'question']
     
@@ -180,8 +183,6 @@ class EvaluationAnswer(models.Model):
     question = models.ForeignKey(EvaluationQuestion, on_delete=models.CASCADE)
     answer = models.IntegerField()
     notes = models.TextField()
-    # connect the evaluation answer onetoone relationship with the company input answer
-    #InputsAnswer = models.ForeignKey(InputsAnswer, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -216,27 +217,7 @@ class ActionPlanForm(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     
-# create a model to handle action plan comments and action plan comments answers
-class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    actionplanform = models.ForeignKey(ActionPlanForm, on_delete=models.CASCADE)
-    comment = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
 
-    
-# create a model to handle action plan comments and action plan comments answers
-class CommentAnswer(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
-    commentanswer = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    
-class CommentActionPlan(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
-    commentactionplan = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
 
 
 

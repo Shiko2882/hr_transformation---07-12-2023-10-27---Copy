@@ -3,7 +3,8 @@
     <ul>
         {% for attachment in attachments %}
             <li>
-                <a href="{% url 'attachment_detail' attachment.id %}">{{ attachment.file.name }} - {{ attachment.description }}</a>
+                <a href="{% url 'attachment_detail' attachment.id %}" class="fa fa-paperclip">-{{ attachment.file.name }} - {{ attachment.description }}</a>
+                 <br>
             </li>
         {% endfor %}
     </ul>

@@ -18,29 +18,31 @@ def dashboard(request):
     context = {"companies":companies, 'consultants':consultants}
     return render(request,'home.html',context)
 
-def company_attachments(request, company_id):
-    company = get_object_or_404(Company, pk=company_id)
-    attachments = company.attachments.all()
+def company_attachments(request, pk):
+    company = Company.objects.get(id=pk)
+    form = AttachmentForm(request.POST or None, request.FILES or None)
+    # Check if the company has any attachments
+    attachments = company.company_attachments.all()
+    if not attachments:
+        messages.warning(request, "No attachments found for this company.")
 
-    if request.method == 'POST':
-        form = AttachmentForm(request.POST, request.FILES)
-        if form.is_valid():
-            attachment = form.save(commit=False)
-            attachment.company = company
-            attachment.save()
-            print("Attachment saved successfully!")  # Add this line
-            return redirect('company_attachments', company_id=company_id)
-    else:
-        form = AttachmentForm()
+    if request.method == 'POST' and form.is_valid():
+        attachment = form.save(commit=False)
+        attachment.company = company
+        attachment.save()
+        messages.success(request, "Attachment saved successfully!")
+        return redirect('company_attachments', pk=pk)
 
     return render(request, 'company/company_attachments.html', {'company': company, 'attachments': attachments, 'form': form})
 
-
-def attachment_widget(request, company_id):
-    company = Company.objects.get(pk=company_id)
-    attachments = company.attachments.all()
+def attachment_widget(request, pk):
+    company = Company.objects.get(pk=pk)
+    attachments = company.company_attachments.all()
+    if not attachments:
+        messages.warning(request, "No attachments found for this company.")
     
     return render(request, 'company/attachment_widget.html', {'company': company, 'attachments': attachments})
+
 def attachment_detail(request, attachment_id):
     attachment = get_object_or_404(Attachment, pk=attachment_id)
     return render(request, 'company/attachment_detail.html', {'attachment': attachment})
@@ -66,7 +68,7 @@ def fill_inputs_form(request, pk=None):
                 answer_field_name = f'answer_{question.id}'
                 notes_field_name = f'notes_{question.id}'
 
-                answer = form.cleaned_data.get(answer_field_name, '')
+                answer = form.cleaned_data.get(answer_field_name, 'N')
                 notes = form.cleaned_data.get(notes_field_name, '')
                 InputsAnswer.objects.update_or_create(
                     company=company,
@@ -165,8 +167,8 @@ def updatecompany(request,pk):
 
 def companyprofile(request,pk):
     companyid= Company.objects.get(id=pk)
-    
-    context = {"companyid":companyid }
+    attachments = companyid.company_attachments.all()
+    context = {"companyid":companyid, "attachments":attachments} 
     return render(request, "company/companyprofile.html",context)
 
 
